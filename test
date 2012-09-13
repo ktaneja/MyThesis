@@ -1,0 +1,7 @@
+curl http://sugivenugeethanaccenturecom-test.apigee.net/category/false/ &
+wait 1
+curl http://sugivenugeethanaccenturecom-test.apigee.net/category/false/ &
+wait 1
+curl http://sugivenugeethanaccenturecom-test.apigee.net/category/false/ &
+wait 1
+

@@ -1,0 +1,134 @@
+\chapter{Introduction}
+\label{sec:intro}
+
+
+
+
+\section{Motivation}
+\label{sec:motivation}
+\begin{quotation}
+\em A program that is used in a real-world environment must change, or become progressively less useful in that environment.  - Lehman and Belady~\cite{lehman:1985}
+\end{quotation}
+
+
+
+Traditionally, a software application is developed in many phases including requirements phase, design phase, implementation phase, testing phase, and maintenance  phase. A successful software application continues to evolve throughout its lifetimes undergoing various kinds of changes. Software maintenance is the process of making changes to an evolving software application throughout its lifetime (after its first release). Since software lifetimes are often long, software maintenance is the longest phase in the software development lifecycle. Software maintenance can be broadly categorized into four major types of maintenance tasks~\cite{lientz80}.  
+
+\begin{itemize}
+\item \textbf{Corrective Maintenance.} Often a software application is released with existing defects in it. While some of these defects are often known, others are unkown at the time of delivery. The known defects are not fixed at the time of delivery due to tight deadlines or limited resources. The unknown defects are discovered in the field by the users of the software application. 
+Moreover, new faults may be introduced in the software application while making changes to it during maintenance phase. Corrective software maintenance is the fixing of all these faults. Previous study~\cite{Mockus:2000} has found that corrective maintenance changes are the most difficult to make.
+
+\item \textbf{Adaptive maintenance.} Often a software application is dependent on its environment that includes hardware, operation system, and database. In addition, the software application may be dependent on other libraries that the software application uses. When the environment or the dependent libraries change to a new version, the software application has to adapt to the changes. Adaptive maintenance includes making these changes to the software application.
+
+\item \textbf{Perfective Maintenance.} 
+Often a software application is enhanced in terms of its efficiency, performance, usability, or functionality. Perfective software maintenance includes making changes to a software applicatication to make these enhancements.
+
+\item \textbf{Preventive Maintenance.}  
+Continuous evolution of a software application often has an adverse effect on the structure of a software application~\cite{lehman:1985}, increasing its size, complexity and decreasing its comprehensability. As a result, the software application gets more difficult to maintain in the future. 
+Preventive Software Maintenance includes making changes to a software application to prevent problems in the future. These changes 
+do not aim to change the behavior of the application but aim to improve the future maintainability of the software application. 
+These changes can include include refactorings, updating documentation or adding code comments.
+\end{itemize}
+Owing to long software lifetimes, software maintenance is an important software development phase. In addition, software maintenance is crucial for business success since the failure to a change software application quickly and reliably can result in losing business opportunities. However, there are two major challenges in changing a software application quickly and reliably.
+%The distribution of maintenance effort between these categories is studied in several previous pieces of work [\cite{study1, study2, study3, study4, Mockus:2000}]  but the distribution appears to be variable among all the studies.
+
+%Software maintenance suffers from two major challenges:
+
+\begin{itemize}
+\item{\textbf{Software Maintenance is Expensive.}} 
+Software maintenance is the most expensive activity of software development, comprising from 
+50\% to 90\% of the overall lifecycle costs~\cite{schneidewind:1987}. It is expensive to 
+maintain a software application due to various reasons. First, as a software application continues to evolve 
+undergoing various kinds of changes\footnote{Changes that are not a part of preventive maintenance tasks}, 
+the application becomes more and more complex~\cite{lehman:1985} and its structure tends to degrade. 
+As a result, the application becomes less maintainable and software maintenance becomes labor intensive and time consuming. 
+Second, often the software developers maintaining the software application are not the ones who developed it. 
+As a result, it is more time consuming for these developers to maintain the software application resulting in high maintenance costs.
+ Due to the preceding reasons, as a software application continues to evolve, the cost of maintenance tends to increase more and more. 
+ The software application continues to evolve until it reaches to a point when it becomes unprofitable to maintain and it is scraped. 
+ As a result, it is important to reduce the cost of software maintenance to sustain the software application in the market.
+
+\item{\textbf{Software Maintenance can reduce software quality.}} Software Maintenance (counter intuitive to its name) can itself result in reducing the software quality. The changes made to a software application can result in unintended side effects (regression faults). Even while performing corrective maintenance, the developers can introduce regression faults in the software application. 
+As the software application becomes more and more complex, it become more and more error-prone to change.
+Since software maintenance is a long phase, it can result in a steady stream of new regression faults throughout the lifetime of the software application. 
+It is no coincidence that efforts spent in corrective maintenance can be up to 37\% of the total software maintenance efforts~\cite{study1, study2, study3, study4, Mockus:2000}.
+
+\end{itemize}
+
+
+\section{Problems and Proposed Solutions}
+\label{sec:problems}
+This dissertation proposes a framework to address several problems that arise from the two major challenges mentioned in Section \ref{sec:motivation}. The framework comprises of various approaches that aim to 
+reduce the cost of software maintenance and increase the quality of an evolving software  application. 
+We next describe the respective solutions proposed by our framework.
+
+\begin{itemize}
+\item \textbf{P1.} To reduce development costs, software applications often reuse existing software libraries. 
+In theory, the Application Programming Interfaces (APIs) of a library should be stable, but in practice they do change (as the library evolves) and thus require changes in a software system that reuses the library. 
+Hence, the software application (using the old libaby API) needs to go through adaptive maintence to adapted to the new library API. 
+Manually, adapting the software application to such changes is error-prone and time consuming. In addition, it is disruptive to other maintenance tasks.
+As a result, manually adapting the software application increases software maintenance costs and increases the chance of introducing regression faults in the software system. 
+
+Previous studies~\cite{Dig:2006} have shown that 80\% of API breaking changes are refactorings. If these refactorings can be detected automatically, there are existing tools~\cite{Henkel05} that can automatically change the underlying software application that reuse the refactored libraries to adapt these software systems to the new library versions. As a result, cost of manually adapting the systems can be saved and the software developers can focus on other maintenance tasks. Our framework address the problem by proposing a solution to automatically detecting refactorings between two versions of a library.
+
+
+\item \textbf{P2.} 
+Changes made to an evolving software system can introduce regression faults. 
+Regression testing is the activity to detect whether the changes made to the software system are intended and do not 
+introduce any side effects. 
+Regression testing is carried out by executing the existing test suite (that was developed for a previous version of the software system)
+against the current version. The failing tests (that pass for the previous software version) indicate behavioral differences between the two versions. 
+Software developers can then inspect the failing tests to find whether the tests fail due to intended changes or regression faults.
+As a result, effectiveness of regression testing depends on the effectiveness of the regression test suite in finding behavioral differences.  
+However, the existing test suite may not be effective in finding behavioral differences making software maintenance error prone.
+Hence, regression tests that are effective in finding behavioral differences are needed. New tests can be generated using existing test generation 
+tools~\cite{cute, dart, king:symex, exe, Clarke:symbolic,JPF-symbolic, godefroid:fuzz, eTOC, inkumsah08:improving}, However, these tools aim at generating tests that can achieve high structural coverage. Hence, achieving high structural coverage is not sufficient for finding behavioral differences. To address the preceding issue, we propose an approach to bridge the gap between finding behavioral differences and coverage-based test generation tools.
+
+\item \textbf{P3.} It is desirable to detect regression faults as quickly as possible to reduce the cost involved in fixing them. 
+One existing solution is continuous testing, which runs an existing test suite to quickly find regression faults as soon as code changes are saved. 
+However, the effectiveness of continuous testing depends on the capability of the existing test suite for 
+finding behavioral differences across versions. The existing test suite might not be able to detect behavioral differences as it is usually created (or generated) without taking into consideration the changes to be made in the future. Then the existing test suite can be augmented using existing test generation techniques to improve the capability of the test suite in terms of detecting behavioral differences. Existing test generation techniques
+such as path-exploration-based test generation (PBTG)~\cite{cute, dart, king:symex, exe, Clarke:symbolic,JPF-symbolic, godefroid:fuzz}
+and search-based test generation~\cite{eTOC, inkumsah08:improving} focus their efforts on increasing structural coverage and do not speciﬁcally focus on detecting behavioral differences between two versions of a program. As a result, these techniques are inefﬁcient for regression test generation, even with increasing computing power thanks to multi-core architectures and cloud computing. To address the preceding issue, we propose an approach that targets at reducing the cost of test generation so that it focuses on detecting behavioral differences. As a result behavioral differences, are likely to be ditected more efficiently.
+
+\item \textbf{P4.} 
+Database-centric  (DCAs) are common in enterprise computing, and they use nontrivial databases \cite{FSE11:03}. Often these DCAs are outsourced for regression testing to data centers \cite{OutsourcingRegression:11} to achieve lower cost and higher quality.
+ When releasing these proprietary DCAs to external test centers, it is desirable for DCA owners to make their databases available to test engineers, so that they can perform testing using original data. However, since sensitive information cannot be disclosed to external organizations, testing is often performed with synthetic input data. For instance, if values of the ﬁeld Nationality are replaced with the generic value “Human,” DCAs may execute some paths that result in exceptions or miss certain paths \cite{TADA:10}. As a result, test centers report worse test coverage (such as code coverage) and fewer uncovered regression faults, thereby reducing the quality of applications and obliterating the beneﬁts of test outsourcing \cite{Gartner:09}. 
+To address the producing problem, we propose an approach that helps organizations can balance the level of privacy with needs of testing. 
+\end{itemize}
+
+
+
+\section{Contributions}
+This dissertation makes the following contributions
+
+\begin{itemize}
+\item \textbf{An approach for effectively finding refactoring between an evolving library.} 
+We have implemented an efficient tool,RefacLib, to detect refactorings with practical accuracy inrealistic software systems.
+We have used RefacLib to ﬁnd several refactorings in ﬁve real-world components. We compared Refac
+Lib with the previous state-of-the-art tool to detect refactorings and found out that our tool is comparable in most cases
+and better in others.
+
+\item \textbf{An approach for effective regression test generation.} 
+We propose an approach, called DiffGen [citation] for generating regression tests that help in detecting behavioral differences between two versions of a given software system by checking 
+observable outputs and receiver object states. We evaluate our approach on detecting behavioral differences between eight subjects (taken from a variety of sources) and their versions. The experimental results show that our approach can effectively expose behavioral differences that cannot be detected by previous state-of-the-art techniques [Cite Differential testing] based on achieving structural coverage on either version separately.
+
+\item \textbf{An approach for efficient regression test generation.}
+We propose an approach called eXpress [citation] for efﬁcient generation of regression tests. To optimize the search strategy of a PBTG technique, eXpress prunes various program paths whose execution guarantees not to find regression faults. As a result, behavioral differences are found efﬁciently by the PBTG technique with eXpress than without eXpress. We have implemented our eXpress approach in a tool as an extension for Pex [21], an automated structural testing tool for .NET developed at Microsoft Research. We have conducted experiments on 67 versions (in
+total) of four programs with two from the Subject Infrastructure
+Repository (SIR) [5] and two from real-world open source projects.
+Experimental results show that Pex using eXpress requires about
+36\% less amount of time (on average) to detect behavioral differences than without using eXpress. In addition, Pex using eXpress
+detects four behavioral difference that could not be detected without using eXpress (within a time bound). Furthermore, Pex requires
+67\% less amount of time to ﬁnd behavioral differences by exploiting an existing test suite than exploration without using the test
+suite.
+
+\item \textbf{An approach for effective regression testing of software in presence of privacy laws.}
+We design and implement a technique using program analysisfor determining how values of database attributes affecttest coverage of DCAs that use this data . We combine our privacy framework with this technique inPRIEST to enable business analysts to balance data privacywith test coverage. We evaluate PRIEST using three open-source Java DCAsand one large Java DCA that handles logistics of one ofthe largest supermarket chains in Spain. We show that withPRIEST, test coverage of regression tests can be preserved at a higher level bypinpointing database attributes that should be anonymizedbased on their effect on corresponding DCAs.
+\end{itemize}
+
+
+\section{Outline}
+The remainder of this dissertation is organized as follows. Chapter 2 describes REfaclib, 
+Chapter 3 describes DiffGen. Chapter 4 describes eXpress. Chapter 5 describes PRIEST. Chapter 6 surveys related work. 
+Finally, Chapter 7 concludes with suggestions for future work.
